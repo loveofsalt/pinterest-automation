@@ -47,7 +47,7 @@ jobs:
     - name: Verify image files exist
       run: |
         echo "🔍 Checking if all image files in CSV exist..."
-        go run check_images.go "${{ github.event.inputs.csv_file }}"
+        go run main.go check-images "${{ github.event.inputs.csv_file }}"
         
     - name: Create Pinterest Pins
       env:
