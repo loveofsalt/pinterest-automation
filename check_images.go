@@ -15,7 +15,7 @@ func main() {
 	}
 
 	csvPath := os.Args[1]
-	
+
 	file, err := os.Open(csvPath)
 	if err != nil {
 		log.Fatalf("Failed to open CSV file: %v", err)
@@ -47,7 +47,7 @@ func main() {
 		if len(row) == 0 || row[0] == "" {
 			continue
 		}
-		
+
 		filePath := row[0]
 		if _, err := os.Stat(filePath); os.IsNotExist(err) {
 			fmt.Printf("❌ Missing file: %s\n", filePath)
@@ -60,6 +60,6 @@ func main() {
 	if !allExist {
 		os.Exit(1)
 	}
-	
+
 	fmt.Println("🎉 All image files found!")
 }
