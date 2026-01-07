@@ -120,17 +120,22 @@ func processBatchPins(token, boardID, csvPath string) {
 		log.Fatal("❌ No pins found in CSV file")
 	}
 
-	log.Printf("📊 Found %d pins to process", len(pins))
-
+	log.Printf("📊 Found %d pins to process from batch: %s", len(pins), filepath.Base(csvPath))
+	log.Printf("🎯 All pins will link to: https://www.loveofsalt.com (default)")
+	
 	successCount := 0
 	failCount := 0
 
 	for i, pin := range pins {
-		log.Printf("🔄 Processing pin %d/%d: %s", i+1, len(pins), pin.Title)
+		title := pin.Title
+		if title == "" {
+			title = filepath.Base(pin.FilePath)
+		}
+		log.Printf("🔄 Processing pin %d/%d: %s", i+1, len(pins), title)
 
 		err := createPinFromData(token, boardID, pin, i+1, len(pins))
 		if err != nil {
-			log.Printf("❌ Failed to create pin %d (%s): %v", i+1, pin.Title, err)
+			log.Printf("❌ Failed to create pin %d (%s): %v", i+1, title, err)
 			failCount++
 		} else {
 			successCount++
@@ -138,16 +143,15 @@ func processBatchPins(token, boardID, csvPath string) {
 	}
 
 	log.Printf("✅ Batch processing complete! Success: %d, Failed: %d", successCount, failCount)
-}
-
-func readPinsFromCSV(csvPath string) ([]PinData, error) {
-	file, err := os.Open(csvPath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open CSV file: %w", err)
+	
+	if failCount > 0 {
+		log.Printf("⚠️  Some pins failed. Check logs above for details.")
+		if successCount == 0 {
+			log.Fatal("❌ All pins failed - batch processing unsuccessful")
+		}
 	}
-	defer file.Close()
-
-	reader := csv.NewReader(file)
+	
+	log.Printf("🎉 Batch %s processed successfully!", filepath.Base(csvPath))
 	reader.FieldsPerRecord = -1 // Allow variable number of fields
 
 	records, err := reader.ReadAll()

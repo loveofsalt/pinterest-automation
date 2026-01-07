@@ -1,22 +1,21 @@
 name: Pinterest Batch Pin Creator
 
 on:
-  # Trigger manually with workflow_dispatch
+  # Manual trigger only - no automatic processing
   workflow_dispatch:
     inputs:
       csv_file:
-        description: 'Path to CSV file (e.g., pins/my_pins.csv)'
+        description: 'Path to CSV file (e.g., pins/batch_2026_01_07.csv)'
         required: true
-        default: 'sample_pins.csv'
-  
-  # Or trigger on push to specific paths
-  push:
-    paths:
-      - 'pins/**/*.csv'
-      - 'sample_pins.csv'
-    branches:
-      - main
-      - coco-bits-dev
+        default: 'pins/batch_YYYY_MM_DD.csv'
+      archive_after_success:
+        description: 'Archive CSV file after successful processing'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+        - 'true'
+        - 'false'
 
 jobs:
   create-pins:
@@ -33,13 +32,14 @@ jobs:
         
     - name: Verify CSV file exists
       run: |
-        CSV_PATH="${{ github.event.inputs.csv_file || 'sample_pins.csv' }}"
+        CSV_PATH="${{ github.event.inputs.csv_file }}"
         if [ ! -f "$CSV_PATH" ]; then
           echo "❌ CSV file not found: $CSV_PATH"
           exit 1
         fi
         echo "✅ Found CSV file: $CSV_PATH"
         echo "CSV_PATH=$CSV_PATH" >> $GITHUB_ENV
+        echo "ARCHIVE_ENABLED=${{ github.event.inputs.archive_after_success }}" >> $GITHUB_ENV
         
     - name: Show CSV contents
       run: |
@@ -58,6 +58,28 @@ jobs:
         PINTEREST_REFRESH_TOKEN: ${{ secrets.PINTEREST_REFRESH_TOKEN }}
         PINTEREST_BOARD_ID: ${{ secrets.PINTEREST_BOARD_ID }}
         INPUT_CSV_PATH: ${{ env.CSV_PATH }}
+        ARCHIVE_ENABLED: ${{ env.ARCHIVE_ENABLED }}
       run: |
         echo "🚀 Starting batch pin creation..."
         go run main.go
+        
+    - name: Archive processed CSV
+      if: success() && env.ARCHIVE_ENABLED == 'true'
+      run: |
+        # Create archive directory if it doesn't exist
+        mkdir -p pins/archive
+        
+        # Move CSV to archive with timestamp
+        TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+        BASENAME=$(basename "$CSV_PATH" .csv)
+        ARCHIVE_NAME="pins/archive/${BASENAME}_processed_${TIMESTAMP}.csv"
+        
+        mv "$CSV_PATH" "$ARCHIVE_NAME"
+        echo "📦 Archived CSV to: $ARCHIVE_NAME"
+        
+        # Commit the archive
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add pins/archive/
+        git commit -m "📦 Archive processed batch: $(basename "$CSV_PATH")" || exit 0
+        git push
