@@ -16,21 +16,21 @@ import (
 )
 
 // Simplified structures for Base64 only
-type MediaSource struct {
+type PinMediaSource struct {
 	SourceType  string `json:"source_type"`
 	Data        string `json:"data"`
 	ContentType string `json:"content_type"`
 }
 
 type PinRequest struct {
-	BoardID        string      `json:"board_id"`
-	BoardSectionID string      `json:"board_section_id,omitempty"`
-	Title          string      `json:"title,omitempty"`
-	Description    string      `json:"description,omitempty"`
-	Link           string      `json:"link,omitempty"`
-	AltText        string      `json:"alt_text,omitempty"`
-	Note           string      `json:"note,omitempty"`
-	MediaSource    MediaSource `json:"media_source"`
+	BoardID        string         `json:"board_id"`
+	BoardSectionID string         `json:"board_section_id,omitempty"`
+	Title          string         `json:"title,omitempty"`
+	Description    string         `json:"description,omitempty"`
+	Link           string         `json:"link,omitempty"`
+	AltText        string         `json:"alt_text,omitempty"`
+	Note           string         `json:"note,omitempty"`
+	MediaSource    PinMediaSource `json:"media_source"`
 }
 
 type TokenResponse struct {
@@ -49,6 +49,15 @@ type PinData struct {
 }
 
 func main() {
+	// Check if this is being called as image validator
+	if len(os.Args) > 1 && os.Args[1] == "check-images" {
+		if len(os.Args) < 3 {
+			log.Fatal("Usage: go run main.go check-images <csv_file>")
+		}
+		checkImagesInCSV(os.Args[2])
+		return
+	}
+
 	// 1. Gather Environment Variables
 	appID := os.Getenv("PINTEREST_APP_ID")
 	appSecret := os.Getenv("PINTEREST_APP_SECRET")
@@ -122,7 +131,7 @@ func processBatchPins(token, boardID, csvPath string) {
 
 	log.Printf("📊 Found %d pins to process from batch: %s", len(pins), filepath.Base(csvPath))
 	log.Printf("🎯 All pins will link to: https://www.loveofsalt.com (default)")
-	
+
 	successCount := 0
 	failCount := 0
 
@@ -143,15 +152,25 @@ func processBatchPins(token, boardID, csvPath string) {
 	}
 
 	log.Printf("✅ Batch processing complete! Success: %d, Failed: %d", successCount, failCount)
-	
+
 	if failCount > 0 {
 		log.Printf("⚠️  Some pins failed. Check logs above for details.")
 		if successCount == 0 {
 			log.Fatal("❌ All pins failed - batch processing unsuccessful")
 		}
 	}
-	
+
 	log.Printf("🎉 Batch %s processed successfully!", filepath.Base(csvPath))
+}
+
+func readPinsFromCSV(csvPath string) ([]PinData, error) {
+	file, err := os.Open(csvPath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open CSV file: %w", err)
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
 	reader.FieldsPerRecord = -1 // Allow variable number of fields
 
 	records, err := reader.ReadAll()
@@ -294,7 +313,7 @@ func createPin(token, boardID, sectionID, title, desc, link, altText, note, base
 		Link:           link,
 		AltText:        altText,
 		Note:           note,
-		MediaSource: MediaSource{
+		MediaSource: PinMediaSource{
 			SourceType:  "image_base64",
 			Data:        base64Data,
 			ContentType: contentType,
@@ -320,4 +339,53 @@ func createPin(token, boardID, sectionID, title, desc, link, altText, note, base
 	}
 
 	return nil
+}
+
+func checkImagesInCSV(csvPath string) {
+	file, err := os.Open(csvPath)
+	if err != nil {
+		log.Fatalf("Failed to open CSV file: %v", err)
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		log.Fatalf("Failed to read CSV: %v", err)
+	}
+
+	if len(records) == 0 {
+		log.Fatal("CSV file is empty")
+	}
+
+	// Skip header if it exists
+	startIdx := 0
+	if len(records) > 0 {
+		firstRow := strings.ToLower(strings.Join(records[0], "|"))
+		if strings.Contains(firstRow, "file_path") || strings.Contains(firstRow, "title") {
+			startIdx = 1
+		}
+	}
+
+	allExist := true
+	for i := startIdx; i < len(records); i++ {
+		row := records[i]
+		if len(row) == 0 || row[0] == "" {
+			continue
+		}
+
+		filePath := row[0]
+		if _, err := os.Stat(filePath); os.IsNotExist(err) {
+			fmt.Printf("❌ Missing file: %s\n", filePath)
+			allExist = false
+		} else {
+			fmt.Printf("✅ Found: %s\n", filePath)
+		}
+	}
+
+	if !allExist {
+		os.Exit(1)
+	}
+
+	fmt.Println("🎉 All image files found!")
 }
