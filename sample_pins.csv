@@ -1,4 +1,51 @@
 file_path,title,description,link,alt_text,section_id,note
-images/locs.jpg,Beautiful Sunset,A stunning sunset over the mountains,https://example.com,Sunset over mountains,,Amazing view
-images/locs.jpg,Nature Walk,Forest path in autumn,https://example.com/nature,Forest path in fall colors,,Peaceful walk
-images/locs.jpg,City Lights,Downtown at night,,City skyline at night,section123,Urban photography
+images/locs.jpg,Mountain Trek,Hiking up the steepest peak at sunrise,https://example.com/hike,Mountain peak at dawn,sec_01,Bring water
+images/locs.jpg,Ocean Breeze,Relaxing by the calm blue sea,https://example.com/beach,Tropical beach view,sec_01,Morning best
+images/locs.jpg,Urban Jungle,Exploring the downtown city streets,,City street with skyscrapers,sec_02,Crowded area
+images/locs.jpg,Coffee Break,A warm cup of latte on a wooden table,https://example.com/coffee,Latte art in cup,,Daily grind
+images/locs.jpg,Night Sky,Stargazing in the desert away from lights,,Starry night sky,sec_03,Use tripod
+images/locs.jpg,Forest Trail,Green mossy path through the deep woods,https://example.com/forest,Green forest path,,Hidden gem
+images/locs.jpg,Desert Dunes,Golden sand dunes stretching for miles,https://example.com/desert,Sand dunes sunset,sec_03,Hot midday
+images/locs.jpg,Snowy Peak,Winter wonderland at the ski resort,,Snow covered mountain,sec_01,Check forecast
+images/locs.jpg,Road Trip,Driving down the long highway Route 66,https://example.com/road,Highway stretching to horizon,,Classic vibe
+images/locs.jpg,Garden Bloom,Spring flowers in full color,,Colorful tulips,sec_04,Seasonal
+images/locs.jpg,Vintage Car,Restored classic muscle car in red,https://example.com/cars,Red vintage car,,Car show
+images/locs.jpg,Workspace Setup,Minimalist desk with laptop and plant,,Clean desk setup,sec_05,Inspo
+images/locs.jpg,Foodie Feast,Gourmet burger with fries on the side,https://example.com/food,Burger and fries,,Cheat meal
+images/locs.jpg,Architecture,Modern glass building facade,,Glass building reflection,sec_02,Design goals
+images/locs.jpg,Sunset Drive,Driving into the sun on the coast,https://example.com/drive,Car interior sunset,,Golden hour
+images/locs.jpg,Camping Life,Tent set up by the lake at dusk,,Tent by lake,sec_03,Peaceful
+images/locs.jpg,Street Art,Colorful graffiti wall in the alley,https://example.com/art,Graffiti wall,,Photo op
+images/locs.jpg,Library Quiet,Rows of old books in a quiet hall,,Old library shelves,sec_06,Study time
+images/locs.jpg,Fitness Goal,Gym weights and water bottle setup,https://example.com/gym,Dumbbells on floor,,Morning workout
+images/locs.jpg,Pet Portrait,Golden retriever playing in the park,,Happy dog running,sec_07,Too cute
+images/locs.jpg,Travel Bag,Packed suitcase ready for the airport,https://example.com/travel,Suitcase and passport,,Adventure awaits
+images/locs.jpg,Concert Lights,Crowd cheering at a live music show,,Concert crowd silhouettes,sec_08,Loud music
+images/locs.jpg,Rainy Day,Raindrops on a window pane,,Rain on glass,sec_04,Cozy mood
+images/locs.jpg,Baking Time,Freshly baked cookies on a rack,https://example.com/baking,Chocolate chip cookies,,Smells good
+images/locs.jpg,Tech Gadgets,Latest smartphone and headphones,,Phone and headphones flatlay,sec_05,Review needed
+images/locs.jpg,Autumn Leaves,Orange and red leaves covering the ground,https://example.com/fall,Fall leaves texture,,October feels
+images/locs.jpg,Waterfall,Powerful waterfall crashing into pool,,Waterfall in jungle,sec_01,Slippery rocks
+images/locs.jpg,Abstract Art,Paint splashes on a white canvas,https://example.com/abstract,Colorful paint splash,,Modern art
+images/locs.jpg,Yoga Morning,Yoga mat unrolled on a balcony,,Yoga mat and sunrise,sec_07,Stretch daily
+images/locs.jpg,Party Vibes,Balloons and confetti for a celebration,https://example.com/party,Birthday balloons,,Fun times
+images/locs.jpg,Coding Session,Code visible on a dark mode screen,,Monitor with code,sec_05,Debug mode
+images/locs.jpg,Rustic Cabin,Wooden cabin in the snowy woods,https://example.com/cabin,Log cabin in snow,,Winter escape
+images/locs.jpg,Market Fresh,Fresh vegetables at a farmers market,,Vegetable stall,sec_09,Buy local
+images/locs.jpg,Surfing Wave,Surfer catching a big wave at sea,https://example.com/surf,Surfer on wave,sec_01,High tide
+images/locs.jpg,Minimalist Room,White room with single chair,,White chair in empty room,sec_02,Clean look
+images/locs.jpg,Gaming Setup,RGB keyboard and mouse in dark room,https://example.com/gaming,RGB keyboard glowing,,Late night
+images/locs.jpg,Bridge Crossing,Suspension bridge over foggy river,,Foggy bridge view,sec_02,Mysterious
+images/locs.jpg,Picnic Spot,Blanket and basket on green grass,https://example.com/picnic,Picnic setup,,Sunny day
+images/locs.jpg,Vinyl Records,Collection of old vinyl records,,Vinyl record stack,sec_08,Music lover
+images/locs.jpg,Cocktail Hour,Fancy drink with garnish at a bar,https://example.com/drinks,Cocktail glass,,Friday night
+images/locs.jpg,Drone Shot,Aerial view of a coastline,,Coastline from above,sec_01,High altitude
+images/locs.jpg,Sneaker Head,Collection of limited edition shoes,https://example.com/shoes,Sneakers on shelf,,New drop
+images/locs.jpg,Wedding day,Bride holding a bouquet of roses,,Wedding bouquet,sec_09,Big day
+images/locs.jpg,Historical Site,Ancient ruins under a bright sun,https://example.com/history,Stone ruins,,Tour guide
+images/locs.jpg,Cat Nap,Cat sleeping on a sunny windowsill,,Sleeping cat,sec_07,Lazy day
+images/locs.jpg,Bike Ride,Bicycle leaning against a brick wall,https://example.com/bike,Bicycle on street,,Commute
+images/locs.jpg,Ice Cream,Holding an ice cream cone in summer,,Ice cream cone,sec_09,Melting fast
+images/locs.jpg,Create Art,Paintbrushes and palette with colors,https://example.com/paint,Art supplies,,Creative flow
+images/locs.jpg,Festival Fun,Ferris wheel at a carnival at night,,Ferris wheel lights,sec_08,Summer nights
+images/locs.jpg,Quiet Reading,Open book and glasses on a bed,,Open book pages,sec_06,Bookworm
