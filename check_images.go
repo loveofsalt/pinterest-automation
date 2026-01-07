@@ -9,7 +9,7 @@ import (
 )
 
 // Simple utility to check if all image files in CSV exist
-func main() {
+func checkImages() {
 	if len(os.Args) < 2 {
 		log.Fatal("Usage: go run check_images.go <csv_file>")
 	}

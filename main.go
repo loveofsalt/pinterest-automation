@@ -16,7 +16,7 @@ import (
 )
 
 // Simplified structures for Base64 only
-type MediaSource struct {
+type PinMediaSource struct {
 	SourceType  string `json:"source_type"`
 	Data        string `json:"data"`
 	ContentType string `json:"content_type"`
@@ -30,7 +30,7 @@ type PinRequest struct {
 	Link           string      `json:"link,omitempty"`
 	AltText        string      `json:"alt_text,omitempty"`
 	Note           string      `json:"note,omitempty"`
-	MediaSource    MediaSource `json:"media_source"`
+	MediaSource    PinMediaSource `json:"media_source"`
 }
 
 type TokenResponse struct {
@@ -304,7 +304,7 @@ func createPin(token, boardID, sectionID, title, desc, link, altText, note, base
 		Link:           link,
 		AltText:        altText,
 		Note:           note,
-		MediaSource: MediaSource{
+		MediaSource: PinMediaSource{
 			SourceType:  "image_base64",
 			Data:        base64Data,
 			ContentType: contentType,
