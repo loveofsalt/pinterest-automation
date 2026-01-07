@@ -23,13 +23,13 @@ type PinMediaSource struct {
 }
 
 type PinRequest struct {
-	BoardID        string      `json:"board_id"`
-	BoardSectionID string      `json:"board_section_id,omitempty"`
-	Title          string      `json:"title,omitempty"`
-	Description    string      `json:"description,omitempty"`
-	Link           string      `json:"link,omitempty"`
-	AltText        string      `json:"alt_text,omitempty"`
-	Note           string      `json:"note,omitempty"`
+	BoardID        string         `json:"board_id"`
+	BoardSectionID string         `json:"board_section_id,omitempty"`
+	Title          string         `json:"title,omitempty"`
+	Description    string         `json:"description,omitempty"`
+	Link           string         `json:"link,omitempty"`
+	AltText        string         `json:"alt_text,omitempty"`
+	Note           string         `json:"note,omitempty"`
 	MediaSource    PinMediaSource `json:"media_source"`
 }
 
@@ -63,7 +63,7 @@ func main() {
 	appSecret := os.Getenv("PINTEREST_APP_SECRET")
 	refreshToken := os.Getenv("PINTEREST_REFRESH_TOKEN")
 	boardID := os.Getenv("PINTEREST_BOARD_ID")
-	
+
 	if appID == "" || refreshToken == "" {
 		log.Fatal("❌ Missing critical secrets (App ID or Refresh Token)")
 	}
@@ -74,7 +74,7 @@ func main() {
 
 	// 2. Check for CSV batch processing or single pin
 	csvPath := os.Getenv("INPUT_CSV_PATH")
-	
+
 	log.Println("🔄 Authenticating...")
 	token := getAccessToken(appID, appSecret, refreshToken)
 
@@ -131,7 +131,7 @@ func processBatchPins(token, boardID, csvPath string) {
 
 	log.Printf("📊 Found %d pins to process from batch: %s", len(pins), filepath.Base(csvPath))
 	log.Printf("🎯 All pins will link to: https://www.loveofsalt.com (default)")
-	
+
 	successCount := 0
 	failCount := 0
 
@@ -152,14 +152,14 @@ func processBatchPins(token, boardID, csvPath string) {
 	}
 
 	log.Printf("✅ Batch processing complete! Success: %d, Failed: %d", successCount, failCount)
-	
+
 	if failCount > 0 {
 		log.Printf("⚠️  Some pins failed. Check logs above for details.")
 		if successCount == 0 {
 			log.Fatal("❌ All pins failed - batch processing unsuccessful")
 		}
 	}
-	
+
 	log.Printf("🎉 Batch %s processed successfully!", filepath.Base(csvPath))
 }
 
@@ -172,7 +172,7 @@ func readPinsFromCSV(csvPath string) ([]PinData, error) {
 
 	reader := csv.NewReader(file)
 	reader.FieldsPerRecord = -1 // Allow variable number of fields
-	
+
 	records, err := reader.ReadAll()
 	if err != nil {
 		return nil, fmt.Errorf("failed to read CSV: %w", err)
@@ -200,7 +200,7 @@ func readPinsFromCSV(csvPath string) ([]PinData, error) {
 	var pins []PinData
 	for i := startIdx; i < len(records); i++ {
 		row := records[i]
-		
+
 		// Skip empty rows
 		if len(row) == 0 || (len(row) == 1 && row[0] == "") {
 			continue
@@ -373,7 +373,7 @@ func checkImagesInCSV(csvPath string) {
 		if len(row) == 0 || row[0] == "" {
 			continue
 		}
-		
+
 		filePath := row[0]
 		if _, err := os.Stat(filePath); os.IsNotExist(err) {
 			fmt.Printf("❌ Missing file: %s\n", filePath)
@@ -386,6 +386,6 @@ func checkImagesInCSV(csvPath string) {
 	if !allExist {
 		os.Exit(1)
 	}
-	
+
 	fmt.Println("🎉 All image files found!")
 }

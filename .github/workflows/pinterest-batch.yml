@@ -8,14 +8,6 @@ on:
         description: 'Path to CSV file (e.g., pins/batch_2026_01_07.csv)'
         required: true
         default: 'pins/batch_YYYY_MM_DD.csv'
-      archive_after_success:
-        description: 'Archive CSV file after successful processing'
-        required: false
-        default: 'true'
-        type: choice
-        options:
-        - 'true'
-        - 'false'
 
 jobs:
   create-pins:
@@ -60,24 +52,24 @@ jobs:
         echo "🚀 Starting batch pin creation..."
         go run main.go
         
-    - name: Archive processed CSV
-      if: success() && github.event.inputs.archive_after_success == 'true'
-      run: |
-        # Create archive directory if it doesn't exist
-        mkdir -p pins/archive
+    # - name: Archive processed CSV
+    #   if: success() && github.event.inputs.archive_after_success == 'true'
+    #   run: |
+    #     # Create archive directory if it doesn't exist
+    #     mkdir -p pins/archive
         
-        # Move CSV to archive with timestamp
-        CSV_PATH="${{ github.event.inputs.csv_file }}"
-        TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-        BASENAME=$(basename "$CSV_PATH" .csv)
-        ARCHIVE_NAME="pins/archive/${BASENAME}_processed_${TIMESTAMP}.csv"
+    #     # Move CSV to archive with timestamp
+    #     CSV_PATH="${{ github.event.inputs.csv_file }}"
+    #     TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+    #     BASENAME=$(basename "$CSV_PATH" .csv)
+    #     ARCHIVE_NAME="pins/archive/${BASENAME}_processed_${TIMESTAMP}.csv"
         
-        mv "$CSV_PATH" "$ARCHIVE_NAME"
-        echo "📦 Archived CSV to: $ARCHIVE_NAME"
+    #     mv "$CSV_PATH" "$ARCHIVE_NAME"
+    #     echo "📦 Archived CSV to: $ARCHIVE_NAME"
         
-        # Commit the archive
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add pins/archive/
-        git commit -m "📦 Archive processed batch: $(basename "$CSV_PATH")" || exit 0
-        git push
+    #     # Commit the archive
+    #     git config --local user.email "action@github.com"
+    #     git config --local user.name "GitHub Action"
+    #     git add pins/archive/
+    #     git commit -m "📦 Archive processed batch: $(basename "$CSV_PATH")" || exit 0
+    #     git push
