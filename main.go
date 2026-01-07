@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/base64"
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -122,7 +121,7 @@ func processBatchPins(token, boardID, csvPath string) {
 
 	log.Printf("📊 Found %d pins to process from batch: %s", len(pins), filepath.Base(csvPath))
 	log.Printf("🎯 All pins will link to: https://www.loveofsalt.com (default)")
-	
+
 	successCount := 0
 	failCount := 0
 
@@ -143,14 +142,14 @@ func processBatchPins(token, boardID, csvPath string) {
 	}
 
 	log.Printf("✅ Batch processing complete! Success: %d, Failed: %d", successCount, failCount)
-	
+
 	if failCount > 0 {
 		log.Printf("⚠️  Some pins failed. Check logs above for details.")
 		if successCount == 0 {
 			log.Fatal("❌ All pins failed - batch processing unsuccessful")
 		}
 	}
-	
+
 	log.Printf("🎉 Batch %s processed successfully!", filepath.Base(csvPath))
 	reader.FieldsPerRecord = -1 // Allow variable number of fields
 

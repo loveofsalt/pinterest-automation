@@ -82,4 +82,4 @@ jobs:
         git config --local user.name "GitHub Action"
         git add pins/archive/
         git commit -m "📦 Archive processed batch: $(basename "$CSV_PATH")" || exit 0
-        git push
+        git push# Trigger workflow
