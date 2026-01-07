@@ -125,7 +125,7 @@ func createPin(token, boardID, sectionID, title, desc, link, altText, note, base
 
 	jsonData, _ := json.Marshal(payload)
 
-	req, _ := http.NewRequest("POST", "https://api.pinterest.com/v5/pins", bytes.NewBuffer(jsonData))
+	req, _ := http.NewRequest("POST", "https://api-sandbox.pinterest.com/v5/pins", bytes.NewBuffer(jsonData))
 	req.Header.Add("Authorization", "Bearer "+token)
 	req.Header.Add("Content-Type", "application/json")
 
