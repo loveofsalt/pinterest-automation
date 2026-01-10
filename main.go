@@ -283,7 +283,7 @@ func getAccessToken(clientID, clientSecret, refreshToken string) string {
 	data.Set("grant_type", "refresh_token")
 	data.Set("refresh_token", refreshToken)
 
-	req, _ := http.NewRequest("POST", "https://api-sandbox.pinterest.com/v5/oauth/token", strings.NewReader(data.Encode()))
+	req, _ := http.NewRequest("POST", "https://api.pinterest.com/v5/oauth/token", strings.NewReader(data.Encode()))
 	req.Header.Add("Authorization", "Basic "+encodedAuth)
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
@@ -322,7 +322,7 @@ func createPin(token, boardID, sectionID, title, desc, link, altText, note, base
 
 	jsonData, _ := json.Marshal(payload)
 
-	req, _ := http.NewRequest("POST", "https://api-sandbox.pinterest.com/v5/pins", bytes.NewBuffer(jsonData))
+	req, _ := http.NewRequest("POST", "https://api.pinterest.com/v5/pins", bytes.NewBuffer(jsonData))
 	req.Header.Add("Authorization", "Bearer "+token)
 	req.Header.Add("Content-Type", "application/json")
 
