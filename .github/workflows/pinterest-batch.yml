@@ -11,7 +11,7 @@ on:
   
   # Automatic daily trigger at 11 AM AST (3 PM UTC)
   schedule:
-    - cron: '0 15 * * *'
+    - cron: '30 19 * * *'
 
 jobs:
   create-pins:
