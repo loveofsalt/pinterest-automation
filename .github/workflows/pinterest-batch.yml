@@ -9,7 +9,7 @@ on:
         required: true
         default: 'pins/batch_YYYY_MM_DD.csv'
   
-  # Automatic daily trigger at 11 AM AST (3 PM UTC)
+  # Automatic daily trigger at 3:30 PM AST (7:30 PM UTC)
   schedule:
     - cron: '30 19 * * *'
 
